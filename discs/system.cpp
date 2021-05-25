@@ -21,6 +21,17 @@ void add(T value, std::vector<T>& vector) {
   }
 }
 
+void add_recursive(id_type disc_index, std::vector<Disc> const& discs, std::vector<id_type>& clusters) {
+  while(true) {
+    add(disc_index, clusters);
+    auto cluster = discs[disc_index].get_cluster();
+    if(cluster == disc_index) {
+      return;
+    }
+    disc_index = cluster;
+  }
+}
+
 auto find_connected_clusters(Disc& new_disc, std::vector<Disc> const& discs, Bins const& bins) {
   auto connected_clusters = std::vector<id_type>();
   auto neighbours = bins.neighbours(new_disc.get_position());
@@ -29,7 +40,7 @@ auto find_connected_clusters(Disc& new_disc, std::vector<Disc> const& discs, Bin
     for(auto disc_index : disc_indices) {
       auto& disc = discs[disc_index];
       if(new_disc.touches(disc)) {
-        add(disc.get_cluster(), connected_clusters);
+        add_recursive(disc_index, discs, connected_clusters);
       }
     }
   }
@@ -55,10 +66,9 @@ void merge_edge_clusters(id_type cluster1, id_type cluster2, std::map<id_type, s
 }
 
 void merge_clusters(id_type cluster1, id_type cluster2, std::vector<Disc>& discs, std::map<id_type, std::vector<float_type>>& edge_clusters) {
-  for(auto& disc : discs) {
-    if(disc.get_cluster() == cluster2) {
-      disc.set_cluster(cluster1);
-    }
+  auto& disc = discs[cluster2];
+  if(disc.get_cluster() == cluster2) {
+    disc.set_cluster(cluster1);
   }
   merge_edge_clusters(cluster1, cluster2, edge_clusters);
 }
@@ -69,13 +79,9 @@ void merge_clusters(std::vector<id_type> const& clusters, std::vector<Disc>& dis
   auto new_cluster = clusters.front();
   auto begin = clusters.begin() + 1;
   auto end = clusters.end();
-  for(auto& disc : discs) {
-    if(std::find(begin, end, disc.get_cluster()) != end) {
-      disc.set_cluster(new_cluster);
-    }
-  }
   for(auto it = begin; it != end; ++it) {
-    merge_edge_clusters(new_cluster, *it, edge_clusters);
+    auto cluster = *it;
+    merge_clusters(new_cluster, cluster, discs, edge_clusters);
   }
 }
 
