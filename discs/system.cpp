@@ -21,11 +21,16 @@ void add(T value, std::vector<T>& vector) {
   }
 }
 
-auto find_connected_clusters(Disc& new_disc, std::vector<Disc> const& discs, std::map<id_type, std::vector<float_type>>& edge_clusters) {
+auto find_connected_clusters(Disc& new_disc, std::vector<Disc> const& discs, Bins const& bins) {
   auto connected_clusters = std::vector<id_type>();
-  for(auto& disc : discs) {
-    if(new_disc.touches(disc)) {
-      add(disc.get_cluster(), connected_clusters);
+  auto neighbours = bins.neighbours(new_disc.get_position());
+  for(auto& bin : neighbours) {
+    auto& disc_indices = bin.get();
+    for(auto disc_index : disc_indices) {
+      auto& disc = discs[disc_index];
+      if(new_disc.touches(disc)) {
+        add(disc.get_cluster(), connected_clusters);
+      }
     }
   }
   return connected_clusters;
@@ -80,7 +85,7 @@ void System::add_disc() {
   auto position = Position::random();
   auto cluster = discs.size();
   auto disc = Disc(position, cluster);
-  auto connected_clusters = find_connected_clusters(disc, discs, edge_clusters);
+  auto connected_clusters = find_connected_clusters(disc, discs, bins);
   if(!connected_clusters.empty()) {
     disc.set_cluster(connected_clusters.front());
     switch(connected_clusters.size()) {
@@ -94,6 +99,7 @@ void System::add_disc() {
         break;
     }
   }
+  bins[disc.get_position()].push_back(discs.size());
   discs.push_back(disc);
   if(disc.touches_edge()) {
     auto& edge_cluster = edge_clusters[disc.get_cluster()];
@@ -105,7 +111,7 @@ bool System::is_done() const {
   // TODO: Temporary
   std::size_t size = 0;
   size = std::reduce(edge_clusters.begin(), edge_clusters.end(), size, [](auto value, auto& pair){ return value + pair.second.size(); });
-  return size >= 2000;
+  return size >= 10000;
 }
 
 std::size_t System::number_of_discs() const {

@@ -22,7 +22,6 @@ public:
   float_type radius() const;
   float_type angle() const;
   
-private:
-  float_type x = 0.0;
-  float_type y = 0.0;
+  float_type const x = 0.0;
+  float_type const y = 0.0;
 };

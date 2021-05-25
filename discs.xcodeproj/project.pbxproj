@@ -12,6 +12,7 @@
 		E26627FE26570BEA00F6F10D /* system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E26627FD26570BEA00F6F10D /* system.cpp */; };
 		E266280026570DF100F6F10D /* position.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E26627FF26570DF100F6F10D /* position.cpp */; };
 		E266280326570FBB00F6F10D /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E266280226570FBB00F6F10D /* random.cpp */; };
+		E2C24164265C00C100A1E8D0 /* bins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2C24163265C00C100A1E8D0 /* bins.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,8 @@
 		E266280126570FBB00F6F10D /* random.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = random.h; sourceTree = "<group>"; };
 		E266280226570FBB00F6F10D /* random.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = random.cpp; sourceTree = "<group>"; };
 		E26628042657137D00F6F10D /* configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = configuration.h; sourceTree = "<group>"; };
+		E2C24162265C00C100A1E8D0 /* bins.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bins.h; sourceTree = "<group>"; };
+		E2C24163265C00C100A1E8D0 /* bins.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bins.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 			isa = PBXGroup;
 			children = (
 				E26627F2265707ED00F6F10D /* main.cpp */,
+				E2C24162265C00C100A1E8D0 /* bins.h */,
+				E2C24163265C00C100A1E8D0 /* bins.cpp */,
 				E26628042657137D00F6F10D /* configuration.h */,
 				E26627FC26570AB400F6F10D /* disc.h */,
 				E21CDE7C265A8E01002BC5D8 /* disc.cpp */,
@@ -147,6 +152,7 @@
 				E26627F3265707ED00F6F10D /* main.cpp in Sources */,
 				E21CDE7D265A8E01002BC5D8 /* disc.cpp in Sources */,
 				E266280026570DF100F6F10D /* position.cpp in Sources */,
+				E2C24164265C00C100A1E8D0 /* bins.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +259,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -261,6 +268,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

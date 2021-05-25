@@ -8,6 +8,7 @@
 #pragma once
 
 #include "disc.h"
+#include "bins.h"
 #include <vector>
 #include <map>
 
@@ -20,6 +21,7 @@ public:
   std::size_t number_of_edge_clusters() const;
   
 private:
-  std::vector<Disc>                          discs;
-  std::map<id_type, std::vector<float_type>> edge_clusters; // cluster -> sorted vector of angles
+  std::vector<Disc>                                    discs;
+  std::map<id_type, std::vector<float_type>>           edge_clusters; // cluster -> sorted vector of angles
+  Bins                                                 bins;
 };
