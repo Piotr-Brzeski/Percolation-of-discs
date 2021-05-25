@@ -14,16 +14,21 @@ namespace {
 
 /// Add new value to the sorted vector
 template<typename T>
-void add(T value, std::vector<T>& vector) {
+bool add(T value, std::vector<T>& vector) {
   auto it = std::lower_bound(vector.begin(), vector.end(), value);
   if(it == vector.end() || *it != value) {
     vector.insert(it, value);
+    return true;
   }
+  return false;
 }
 
 void add_recursive(id_type disc_index, std::vector<Disc> const& discs, std::vector<id_type>& clusters) {
   while(true) {
-    add(disc_index, clusters);
+    auto added = add(disc_index, clusters);
+    if(!added) {
+      return;
+    }
     auto cluster = discs[disc_index].get_cluster();
     if(cluster == disc_index) {
       return;
