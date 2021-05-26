@@ -10,10 +10,15 @@
 
 int main(int argc, const char * argv[]) {
   try {
-    auto system = System();
+    auto system = System(120);
     while(!system.is_done()) {
       system.add_disc();
     }
+    auto& percolations = system.get_percolations();
+    for(auto percolation : percolations) {
+      std::cout << percolation << "\n";
+    }
+    std::cout << std::endl;
     std::cout << "n = " << system.number_of_discs() << std::endl;
     std::cout << "c = " << system.number_of_edge_clusters() << std::endl;
     return 0;

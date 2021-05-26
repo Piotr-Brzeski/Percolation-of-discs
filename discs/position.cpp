@@ -8,7 +8,6 @@
 #include "configuration.h"
 #include "position.h"
 #include "random.h"
-#include <cmath>
 
 Position::Position(float_type x, float_type y)
   : x(x)
@@ -41,7 +40,7 @@ float_type Position::angle() const {
   if(y >= 0.0) {
     return std::atan2(y, x);
   }
-  return 2*M_PI + std::atan2(y, x);
+  return two_pi + std::atan2(y, x);
 }
 
 float_type Position::distance_squared_to(Position const& position) const {
