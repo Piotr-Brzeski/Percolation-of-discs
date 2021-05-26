@@ -84,10 +84,21 @@ System::System(std::size_t number_of_orientations)
 
 void System::add_disc() {
   auto position = Position::random();
+  add_disc(position);
+}
+
+void System::add_disc(float_type x, float_type y) {
+  auto position = Position(x, y);
+  if(position.is_valid()) {
+    add_disc(position);
+  }
+}
+
+void System::add_disc(Position const& position) {
   auto cluster = discs.size();
   auto disc = Disc(position, cluster);
   auto connected_clusters = find_connected_clusters(disc);
-  auto main_cluster_size = main_cluster ? edge_cluster_size(*main_cluster) : 0; //std::size_t(0);
+  auto main_cluster_size = main_cluster ? edge_cluster_size(*main_cluster) : 0;
   if(!connected_clusters.empty()) {
     cluster = connected_clusters.front();
     disc.set_cluster(cluster);
@@ -137,6 +148,25 @@ std::size_t System::number_of_edge_clusters() const {
 
 std::vector<std::size_t> const& System::get_percolations() const {
   return percolations;
+}
+
+std::vector<Disc> const& System::get_discs() const {
+  return discs;
+}
+
+std::map<id_type, std::vector<float_type>> const& System::get_edge_clusters() const {
+  return edge_clusters;
+}
+
+std::vector<float_type> const& System::get_main_edge_cluster() const {
+  static auto const empty = std::vector<float_type>();
+  if(main_cluster) {
+    auto it = edge_clusters.find(*main_cluster);
+    assert(it != edge_clusters.end());
+    auto& vector = it->second;
+    return vector;
+  }
+  return empty;
 }
 
 // MARK: - private
@@ -219,13 +249,13 @@ std::size_t System::edge_cluster_size(id_type cluster) const {
 
 std::vector<float_type> const& System::updated_main_cluster(std::size_t previous_size, id_type cluster) {
   static auto const not_updated = std::vector<float_type>();
-  static constexpr auto min_angle = two_pi/3;
+  static constexpr auto min_angle = 2*two_pi/3;
   if(main_cluster) {
-    if(auto it = edge_clusters.find(*main_cluster);it != edge_clusters.end()) {
-      auto& vector = it->second;
-      if(vector.size() > previous_size) {
-        return vector;
-      }
+    auto it = edge_clusters.find(*main_cluster);
+    assert(it != edge_clusters.end());
+    auto& vector = it->second;
+    if(vector.size() > previous_size) {
+      return vector;
     }
   }
   else {

@@ -17,6 +17,8 @@ class System {
 public:
   System(std::size_t number_of_orientations);
   void add_disc();
+  void add_disc(float_type x, float_type y);
+  
   bool is_done() const;
   
   std::size_t number_of_discs() const;
@@ -24,7 +26,13 @@ public:
   
   std::vector<std::size_t> const& get_percolations() const;
   
+  // For Graphical Test Application
+  std::vector<Disc> const& get_discs() const;
+  std::map<id_type, std::vector<float_type>> const& get_edge_clusters() const;
+  std::vector<float_type> const& get_main_edge_cluster() const;
+  
 private:
+  void add_disc(Position const& position);
   std::vector<id_type> find_connected_clusters(Disc& new_disc) const;
   void add_recursive(id_type disc_index, std::vector<id_type>& clusters) const;
   void merge_clusters(id_type cluster1, id_type cluster2);

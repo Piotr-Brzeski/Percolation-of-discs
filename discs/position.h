@@ -16,6 +16,8 @@ public:
   
   static Position random();
   
+  bool is_valid() const;
+  
   float_type distance_squared_to(Position const& position) const;
   
   float_type radius_squared() const;

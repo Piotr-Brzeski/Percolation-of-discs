@@ -15,7 +15,7 @@ Disc::Disc(Position position, id_type  cluster)
 }
 
 bool Disc::touches(Disc disc) const {
-  static constexpr auto max_distance_squared = disc_radius*disc_radius;
+  static constexpr auto max_distance_squared = disc_diameter*disc_diameter;
   auto distance_squared = position.distance_squared_to(disc.position);
   return distance_squared < max_distance_squared;
 }

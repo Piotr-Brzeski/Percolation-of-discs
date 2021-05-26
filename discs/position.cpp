@@ -9,6 +9,12 @@
 #include "position.h"
 #include "random.h"
 
+namespace {
+
+constexpr float_type max_radius = 1.0 + disc_radius;
+
+} //  namespace
+
 Position::Position(float_type x, float_type y)
   : x(x)
   , y(y)
@@ -16,15 +22,18 @@ Position::Position(float_type x, float_type y)
 }
 
 Position Position::random() {
-  static constexpr float_type max_radius = 1.0 + disc_radius;
-  static constexpr float_type max_radius_squared = max_radius*max_radius;
   thread_local auto random_generator = Random(-max_radius, max_radius);
   while(true) {
     auto position = Position(random_generator(), random_generator());
-    if(position.radius_squared() <= max_radius_squared) {
+    if(position.is_valid()) {
       return position;
     }
   }
+}
+
+bool Position::is_valid() const {
+  static constexpr float_type max_radius_squared = max_radius*max_radius;
+  return radius_squared() <= max_radius_squared;
 }
 
 float_type Position::radius_squared() const {
