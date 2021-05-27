@@ -50,7 +50,6 @@
 		E26627FF26570DF100F6F10D /* position.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = position.cpp; sourceTree = "<group>"; };
 		E266280126570FBB00F6F10D /* random.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = random.h; sourceTree = "<group>"; };
 		E266280226570FBB00F6F10D /* random.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = random.cpp; sourceTree = "<group>"; };
-		E26628042657137D00F6F10D /* configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = configuration.h; sourceTree = "<group>"; };
 		E2B573BF265EBB74003E8C95 /* DiscsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2B573C1265EBB74003E8C95 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E2B573C2265EBB74003E8C95 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -63,6 +62,9 @@
 		E2B573CF265EBB75003E8C95 /* DiscsTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscsTest.entitlements; sourceTree = "<group>"; };
 		E2B573D3265EBBB2003E8C95 /* DiscsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscsView.h; sourceTree = "<group>"; };
 		E2B573D4265EBBB2003E8C95 /* DiscsView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiscsView.mm; sourceTree = "<group>"; };
+		E2B573DF265FE42D003E8C95 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E2B573E0265FE42D003E8C95 /* Percolation of Discs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Percolation of Discs.png"; sourceTree = "<group>"; };
+		E2B573E1265FE42D003E8C95 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		E2C24162265C00C100A1E8D0 /* bins.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bins.h; sourceTree = "<group>"; };
 		E2C24163265C00C100A1E8D0 /* bins.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bins.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +90,7 @@
 		E26627E6265707ED00F6F10D = {
 			isa = PBXGroup;
 			children = (
+				E2B573DE265FE413003E8C95 /* Other */,
 				E26627F1265707ED00F6F10D /* discs */,
 				E2B573C0265EBB74003E8C95 /* DiscsTest */,
 				E26627F0265707ED00F6F10D /* Products */,
@@ -109,7 +112,6 @@
 				E26627F2265707ED00F6F10D /* main.cpp */,
 				E2C24162265C00C100A1E8D0 /* bins.h */,
 				E2C24163265C00C100A1E8D0 /* bins.cpp */,
-				E26628042657137D00F6F10D /* configuration.h */,
 				E26627FC26570AB400F6F10D /* disc.h */,
 				E21CDE7C265A8E01002BC5D8 /* disc.cpp */,
 				E26627FA2657093700F6F10D /* position.h */,
@@ -139,6 +141,16 @@
 				E2B573D4265EBBB2003E8C95 /* DiscsView.mm */,
 			);
 			path = DiscsTest;
+			sourceTree = "<group>";
+		};
+		E2B573DE265FE413003E8C95 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				E2B573E1265FE42D003E8C95 /* LICENSE */,
+				E2B573E0265FE42D003E8C95 /* Percolation of Discs.png */,
+				E2B573DF265FE42D003E8C95 /* README.md */,
+			);
+			name = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

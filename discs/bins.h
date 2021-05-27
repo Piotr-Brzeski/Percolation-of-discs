@@ -17,6 +17,8 @@ using key_type = std::pair<bin_coordinate_type, bin_coordinate_type>;
 
 class Bins {
 public:
+  static void configure(float_type disc_radius);
+  
   bin_type& operator[](Position const& position);
   std::vector<std::reference_wrapper<bin_type const>> neighbours(Position const& position) const;
   

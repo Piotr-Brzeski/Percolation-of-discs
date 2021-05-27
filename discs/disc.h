@@ -11,7 +11,8 @@
 
 class Disc {
 public:
-  Disc() = default;
+  static void configure(float_type disc_radius);
+  
   Disc(Position position, id_type  cluster);
   
   bool touches(Disc disc) const;

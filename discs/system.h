@@ -15,7 +15,7 @@
 
 class System {
 public:
-  System(std::size_t number_of_orientations);
+  System(float_type disc_radius, std::size_t number_of_orientations);
   void add_disc();
   void add_disc(float_type x, float_type y);
   

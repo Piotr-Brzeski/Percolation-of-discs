@@ -6,7 +6,21 @@
 //
 
 #include "disc.h"
-#include "configuration.h"
+
+namespace {
+
+float_type max_distance_squared = 0;
+float_type min_radius_squared = 0;
+
+}
+
+void Disc::configure(float_type disc_radius) {
+  auto disc_diameter = 2*disc_radius;
+  max_distance_squared = disc_diameter*disc_diameter;
+  
+  auto min_radius = 1 - disc_radius;
+  min_radius_squared = min_radius*min_radius;
+}
 
 Disc::Disc(Position position, id_type  cluster)
   : position(position)
@@ -15,14 +29,11 @@ Disc::Disc(Position position, id_type  cluster)
 }
 
 bool Disc::touches(Disc disc) const {
-  static constexpr auto max_distance_squared = disc_diameter*disc_diameter;
   auto distance_squared = position.distance_squared_to(disc.position);
   return distance_squared < max_distance_squared;
 }
 
 bool Disc::touches_edge() const {
-  static constexpr auto min_radius = 1.0 - disc_radius;
-  static constexpr auto min_radius_squared = min_radius*min_radius;
   return position.radius_squared() >= min_radius_squared;
 }
 

@@ -75,11 +75,14 @@ bool is_percolation(std::vector<float_type> const& angles, float_type orientatio
 
 } //  namespace
 
-System::System(std::size_t number_of_orientations)
+System::System(float_type disc_radius, std::size_t number_of_orientations)
   : orientations(generate_orientations(number_of_orientations))
   , orientations_to_check(generate_sequence(number_of_orientations))
   , percolations(number_of_orientations, 0)
 {
+  Position::configure(disc_radius);
+  Disc::configure(disc_radius);
+  Bins::configure(disc_radius);
 }
 
 void System::add_disc() {

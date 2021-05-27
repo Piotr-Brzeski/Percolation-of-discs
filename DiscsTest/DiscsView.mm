@@ -11,29 +11,32 @@
 #include <iostream>
 
 namespace {
-  System discsSystem(10);
-  constexpr CGFloat disc_radius = 0.1;
-  
-  void printEdgeClusters() {
-    std::cout << "Edge clusters:" << std::endl;
-    auto& edge_clusters = discsSystem.get_edge_clusters();
-    for(auto cluster : edge_clusters) {
-      std::cout << cluster.first << " : ";
-      for(auto angle : cluster.second) {
-        std::cout << angle << ", ";
-      }
-      std::cout << std::endl;
+
+constexpr CGFloat disc_radius = 0.1;
+constexpr std::size_t number_of_orientations = 10;
+
+System discsSystem(disc_radius, number_of_orientations);
+
+void printEdgeClusters() {
+  std::cout << "Edge clusters:" << std::endl;
+  auto& edge_clusters = discsSystem.get_edge_clusters();
+  for(auto cluster : edge_clusters) {
+    std::cout << cluster.first << " : ";
+    for(auto angle : cluster.second) {
+      std::cout << angle << ", ";
     }
     std::cout << std::endl;
   }
-  
-  void printPercolations() {
-    auto& percolations = discsSystem.get_percolations();
-    for(auto percolation : percolations) {
-      std::cout << percolation << std::endl;
-    }
+  std::cout << std::endl;
+}
+
+void printPercolations() {
+  auto& percolations = discsSystem.get_percolations();
+  for(auto percolation : percolations) {
+    std::cout << percolation << std::endl;
   }
-  
+}
+
 } //  namespace
 
 @implementation DiscsView

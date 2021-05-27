@@ -5,15 +5,20 @@
 //  Created by Piotr Brzeski on 2021-05-20.
 //
 
-#include "configuration.h"
 #include "position.h"
 #include "random.h"
 
 namespace {
 
-constexpr float_type max_radius = 1.0 + disc_radius;
+float_type max_radius = 0;
+float_type max_radius_squared = 0;
 
 } //  namespace
+
+void Position::configure(float_type disc_radius) {
+  max_radius = 1.0 + disc_radius;
+  max_radius_squared = max_radius*max_radius;
+}
 
 Position::Position(float_type x, float_type y)
   : x(x)
@@ -32,7 +37,6 @@ Position Position::random() {
 }
 
 bool Position::is_valid() const {
-  static constexpr float_type max_radius_squared = max_radius*max_radius;
   return radius_squared() <= max_radius_squared;
 }
 

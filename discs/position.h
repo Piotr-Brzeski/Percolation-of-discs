@@ -11,6 +11,8 @@
 
 class Position {
 public:
+  static void configure(float_type disc_radius);
+  
   Position() = default;
   Position(float_type x, float_type y);
   

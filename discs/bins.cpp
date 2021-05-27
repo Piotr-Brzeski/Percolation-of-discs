@@ -6,10 +6,11 @@
 //
 
 #include "bins.h"
-#include "configuration.h"
 #include <limits>
 
 namespace {
+
+float_type disc_diameter = 0;
 
 int coordinate(float_type position) {
   if(position < 0) {
@@ -25,6 +26,10 @@ void append(key_type const& key, std::map<key_type, bin_type> const& bins, std::
 }
 
 } //  namespace
+
+void Bins::configure(float_type disc_radius) {
+  disc_diameter = 2*disc_radius;
+}
 
 bin_type& Bins::operator[](Position const& position) {
   auto key = key_type(coordinate(position.x), coordinate(position.y));
