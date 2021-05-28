@@ -12,7 +12,7 @@
 
 namespace {
 
-constexpr CGFloat disc_radius = 0.1;
+constexpr auto disc_radius = float_type(0.1);
 constexpr std::size_t number_of_orientations = 10;
 
 System discsSystem(disc_radius, number_of_orientations);
@@ -115,7 +115,7 @@ void printPercolations() {
   CGFloat scale = self.scale/2;
   x /= scale;
   y /= scale;
-  discsSystem.add_disc(x, y);
+  discsSystem.add_disc(static_cast<float_type>(x), static_cast<float_type>(y));
   [self setNeedsDisplay:YES];
   return self.isDone;
 }

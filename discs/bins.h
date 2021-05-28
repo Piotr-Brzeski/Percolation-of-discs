@@ -22,6 +22,8 @@ public:
   bin_type& operator[](Position const& position);
   std::vector<std::reference_wrapper<bin_type const>> neighbours(Position const& position) const;
   
+  void print_stats() const;
+  
 private:
   std::map<key_type, bin_type> bins;
 };

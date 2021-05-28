@@ -9,8 +9,11 @@
 #include <algorithm>
 #include <numeric>
 #include <cassert>
+#include <iostream>
 
 namespace {
+
+float_type disc_radius = 0;
 
 /// Add new value to the sorted vector
 template<typename T>
@@ -80,6 +83,7 @@ System::System(float_type disc_radius, std::size_t number_of_orientations)
   , orientations_to_check(generate_sequence(number_of_orientations))
   , percolations(number_of_orientations, 0)
 {
+  ::disc_radius = disc_radius;
   Position::configure(disc_radius);
   Disc::configure(disc_radius);
   Bins::configure(disc_radius);
@@ -151,6 +155,13 @@ std::size_t System::number_of_edge_clusters() const {
 
 std::vector<std::size_t> const& System::get_percolations() const {
   return percolations;
+}
+
+void System::print_stats() const {
+  std::cout << "Disc radius: " << disc_radius << std::endl;
+  std::cout << "Number of discs: " << discs.size() << std::endl;
+  std::cout << "Edge cluster size: " << get_main_edge_cluster().size() << std::endl;
+  bins.print_stats();
 }
 
 std::vector<Disc> const& System::get_discs() const {
@@ -229,7 +240,7 @@ void System::merge_edge_clusters(id_type cluster1, id_type cluster2) {
       auto& vector2 = cluster2_it->second;
       assert(!vector1.empty());
       assert(!vector2.empty());
-      auto vector1_size = vector1.size();
+      auto vector1_size = static_cast<int64_t>(vector1.size());
       vector1.insert(vector1.end(), vector2.begin(), vector2.end());
       std::inplace_merge(vector1.begin(), vector1.begin() + vector1_size, vector1.end());
     }
@@ -262,9 +273,12 @@ std::vector<float_type> const& System::updated_main_cluster(std::size_t previous
     }
   }
   else {
-    if(auto& angles = edge_clusters.find(cluster)->second; angles.size() > 2 && max_distance(angles) < min_angle) {
-      main_cluster = cluster;
-      return angles;
+    if(auto it = edge_clusters.find(cluster); it != edge_clusters.end()) {
+      auto& angles = it->second;
+      if(angles.size() > 2 && max_distance(angles) < min_angle) {
+        main_cluster = cluster;
+        return angles;
+      }
     }
   }
   return not_updated;

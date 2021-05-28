@@ -26,6 +26,8 @@ public:
   
   std::vector<std::size_t> const& get_percolations() const;
   
+  void print_stats() const;
+  
   // For Graphical Test Application
   std::vector<Disc> const& get_discs() const;
   std::map<id_type, std::vector<float_type>> const& get_edge_clusters() const;

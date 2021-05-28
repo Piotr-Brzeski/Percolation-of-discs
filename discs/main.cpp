@@ -48,7 +48,7 @@ int main(int argc, const char * argv[]) {
     while(disc_radius == 0 || number_of_orientations == 0) {
       auto& name = arguments.next();
       if(name == "-radius") {
-        disc_radius = std::stod(arguments.next());
+        disc_radius = static_cast<float_type>(std::stod(arguments.next()));
       }
       else if(name == "-orientations") {
         number_of_orientations = std::stoull(arguments.next());
@@ -69,6 +69,7 @@ int main(int argc, const char * argv[]) {
     for(auto percolation : percolations) {
       std::cout << percolation << "\n";
     }
+    //system.print_stats();
     return 0;
   }
   catch(std::exception& e) {

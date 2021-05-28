@@ -16,7 +16,7 @@ float_type max_radius_squared = 0;
 } //  namespace
 
 void Position::configure(float_type disc_radius) {
-  max_radius = 1.0 + disc_radius;
+  max_radius = 1 + disc_radius;
   max_radius_squared = max_radius*max_radius;
 }
 
