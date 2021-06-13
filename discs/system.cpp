@@ -6,6 +6,7 @@
 //
 
 #include "system.h"
+#include <array>
 #include <algorithm>
 #include <numeric>
 #include <cassert>
@@ -36,52 +37,26 @@ float_type max_distance(std::vector<float_type> const& angles) {
   return max_distance;
 }
 
-std::vector<float_type> generate_orientations(std::size_t number_of_orientations) {
-  auto const step = two_pi/3/number_of_orientations;
-  auto orientations = std::vector<float_type>();
-  orientations.reserve(number_of_orientations);
-  for(float_type angle = 0; angle < two_pi/3; angle += step) {
-    orientations.push_back(angle);
+auto max_distances(std::vector<float_type> const& angles) {
+  assert(angles.size() > 2);
+  auto distances = std::array<float_type, 2>{};
+  distances.front() = angles.front() + two_pi - angles.back();
+  for(std::size_t i = 1; i < angles.size(); ++i) {
+    auto distance = angles[i] - angles[i - 1];
+    if(distance > distances.front()) {
+      distances.back() = distances.front();
+      distances.front() = distance;
+    }
+    else if(distance > distances.back()) {
+      distances.back() = distance;
+    }
   }
-  return orientations;
-}
-
-std::vector<std::size_t> generate_sequence(std::size_t number_of_values) {
-  auto sequence = std::vector<std::size_t>(number_of_values);
-  std::iota(sequence.begin(), sequence.end(), 0);
-  return sequence;
-}
-
-bool contains_value_in_range(float_type from, float_type to, std::vector<float_type> const& values) {
-  auto it = std::lower_bound(values.begin(), values.end(), from);
-  return it != values.end() && *it < to;
-}
-
-bool contains_angle_in_range(float_type from, float_type to, std::vector<float_type> const& angles) {
-  assert(from < two_pi);
-  if(contains_value_in_range(from, std::min(to, two_pi), angles)) {
-    return true;
-  }
-  if(to > two_pi) {
-    return contains_value_in_range(0, to - two_pi, angles);
-  }
-  return false;
-}
-
-bool is_percolation(std::vector<float_type> const& angles, float_type orientation) {
-  constexpr auto step = two_pi/3;
-  return
-    contains_angle_in_range(orientation, orientation + step, angles) &&
-    contains_angle_in_range(orientation + step, orientation + 2*step, angles) &&
-    contains_angle_in_range(orientation + 2*step, orientation + 3*step, angles);
+  return distances;
 }
 
 } //  namespace
 
-System::System(float_type disc_radius, std::size_t number_of_orientations)
-  : orientations(generate_orientations(number_of_orientations))
-  , orientations_to_check(generate_sequence(number_of_orientations))
-  , percolations(number_of_orientations, 0)
+System::System(float_type disc_radius)
 {
   ::disc_radius = disc_radius;
   Position::configure(disc_radius);
@@ -126,23 +101,30 @@ void System::add_disc(Position const& position) {
     auto& edge_cluster = edge_clusters[disc.get_cluster()];
     add(disc.get_position().angle(), edge_cluster);
   }
+  float_type percolation_probability = 0;
   if(auto& angles = updated_main_cluster(main_cluster_size, cluster); !angles.empty()) {
-    auto it = orientations_to_check.begin();
-    while(it != orientations_to_check.end()) {
-      auto index = *it;
-      if(is_percolation(angles, orientations[index])) {
-        percolations[index] = discs.size();
-        it = orientations_to_check.erase(it);
+    auto distances = max_distances(angles);
+    assert(distances.front() < 2*two_pi/3);
+    if(distances.front() > two_pi/3) {
+      if (distances.back() > two_pi/3) {
+        percolation_probability = 3 - (distances.front() + distances.back()) / (two_pi/3);
       }
       else {
-        ++it;
+        percolation_probability = 2 - distances.front() / (two_pi/3);
       }
     }
+    else {
+      percolation_probability = 1;
+    }
+  }
+  if(percolation_probability > current_percolation_probability) {
+    percolation_probabilities.emplace_back(discs.size(), percolation_probability);
+    current_percolation_probability = percolation_probability;
   }
 }
 
 bool System::is_done() const {
-  return orientations_to_check.empty();
+  return current_percolation_probability >= 1;
 }
 
 std::size_t System::number_of_discs() const {
@@ -153,8 +135,8 @@ std::size_t System::number_of_edge_clusters() const {
   return edge_clusters.size();
 }
 
-std::vector<std::size_t> const& System::get_percolations() const {
-  return percolations;
+std::vector<std::pair<std::size_t, float_type>> const& System::get_percolation_probabilities() const {
+  return percolation_probabilities;
 }
 
 void System::print_stats() const {

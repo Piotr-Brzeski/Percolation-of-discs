@@ -15,7 +15,7 @@
 
 class System {
 public:
-  System(float_type disc_radius, std::size_t number_of_orientations);
+  System(float_type disc_radius);
   void add_disc();
   void add_disc(float_type x, float_type y);
   
@@ -24,7 +24,7 @@ public:
   std::size_t number_of_discs() const;
   std::size_t number_of_edge_clusters() const;
   
-  std::vector<std::size_t> const& get_percolations() const;
+  std::vector<std::pair<std::size_t, float_type>> const& get_percolation_probabilities() const;
   
   void print_stats() const;
   
@@ -47,7 +47,6 @@ private:
   std::vector<Disc>                                    discs;
   std::map<id_type, std::vector<float_type>>           edge_clusters; // cluster -> sorted vector of angles
   std::optional<id_type>                               main_cluster;
-  std::vector<float_type> const                        orientations;
-  std::vector<std::size_t>                             orientations_to_check;
-  std::vector<std::size_t>                             percolations;
+  float_type                                           current_percolation_probability = 0;
+  std::vector<std::pair<std::size_t, float_type>>      percolation_probabilities;
 };

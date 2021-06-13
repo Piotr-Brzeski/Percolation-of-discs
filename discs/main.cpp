@@ -34,7 +34,7 @@ private:
 
 void print_usage(const char* name) {
   std::cout << "Usage:" << std::endl;
-  std::cout << name << " -radius disc_radius -orientations number_of_orientations" << std::endl;
+  std::cout << name << " -radius disc_radius" << std::endl;
   std::cout << name << " -help" << std::endl;
 }
 
@@ -44,14 +44,10 @@ int main(int argc, const char * argv[]) {
   try {
     auto arguments = Arguments(argc, argv);
     float_type disc_radius = 0;
-    std::size_t number_of_orientations = 0;
-    while(disc_radius == 0 || number_of_orientations == 0) {
+    while(disc_radius == 0) {
       auto& name = arguments.next();
       if(name == "-radius") {
         disc_radius = static_cast<float_type>(std::stod(arguments.next()));
-      }
-      else if(name == "-orientations") {
-        number_of_orientations = std::stoull(arguments.next());
       }
       else if(name == "-help") {
         print_usage(argv[0]);
@@ -61,13 +57,13 @@ int main(int argc, const char * argv[]) {
         throw std::runtime_error("Invalid argument.");
       }
     }
-    auto system = System(disc_radius, number_of_orientations);
+    auto system = System(disc_radius);
     while(!system.is_done()) {
       system.add_disc();
     }
-    auto& percolations = system.get_percolations();
-    for(auto percolation : percolations) {
-      std::cout << percolation << "\n";
+    auto& percolation_probabilities = system.get_percolation_probabilities();
+    for(auto [number_of_discs, percolation_probability] : percolation_probabilities) {
+      std::cout << number_of_discs << '\t' << percolation_probability << "\n";
     }
     //system.print_stats();
     return 0;
