@@ -67,6 +67,7 @@
 		E2B573E0265FE42D003E8C95 /* Percolation of Discs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Percolation of Discs.png"; sourceTree = "<group>"; };
 		E2B573E1265FE42D003E8C95 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		E2B573E2265FF609003E8C95 /* stats.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = stats.txt; path = stats/stats.txt; sourceTree = "<group>"; };
+		E2B573E426615818003E8C95 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		E2C24162265C00C100A1E8D0 /* bins.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bins.h; sourceTree = "<group>"; };
 		E2C24163265C00C100A1E8D0 /* bins.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bins.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -148,6 +149,7 @@
 		E2B573DE265FE413003E8C95 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				E2B573E426615818003E8C95 /* Makefile */,
 				E2B573E1265FE42D003E8C95 /* LICENSE */,
 				E2B573E0265FE42D003E8C95 /* Percolation of Discs.png */,
 				E2B573DF265FE42D003E8C95 /* README.md */,
