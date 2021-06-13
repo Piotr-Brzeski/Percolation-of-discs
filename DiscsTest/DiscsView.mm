@@ -13,9 +13,8 @@
 namespace {
 
 constexpr auto disc_radius = float_type(0.1);
-constexpr std::size_t number_of_orientations = 10;
 
-System discsSystem(disc_radius, number_of_orientations);
+System discsSystem(disc_radius);
 
 void printEdgeClusters() {
   std::cout << "Edge clusters:" << std::endl;
@@ -31,9 +30,9 @@ void printEdgeClusters() {
 }
 
 void printPercolations() {
-  auto& percolations = discsSystem.get_percolations();
-  for(auto percolation : percolations) {
-    std::cout << percolation << std::endl;
+  auto& percolation_probabilities = discsSystem.get_percolation_probabilities();
+  for(auto [number_of_discs, percolation_probability] : percolation_probabilities) {
+    std::cout << number_of_discs << '\t' << percolation_probability << "\n";
   }
 }
 
